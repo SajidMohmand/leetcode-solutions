@@ -40,6 +40,25 @@ class  LL{
         head =  head.next;
         return data;
     }
+    public int deleteFromLast(){
+        if (head == null){
+            return -1;
+        }
+        if (head.next == null){
+            int a = head.data;
+            head = null;
+            return a;
+        }
+
+        Node temp = head;
+        while (temp.next.next != null){
+            temp = temp.next;
+        }
+        int data = temp.next.data;
+        temp.next = null;
+        return data;
+    }
+
     // Delete a node with the given value
     public void delete(int value) {
         // Case 1: List is empty
@@ -162,20 +181,42 @@ public class LinkList_Design {
         return result;
     }
     // Question-82
-    public static Node deleteDuplicates(Node head) {
+    public Node deleteDuplicates(Node head) {
+        // Dummy node to handle edge cases easily
+        Node dummy = new Node(0);
+        dummy.next = head;
 
-        Node temp = head;
-        Node prev = null;
+        // prev points to the last node before the potential duplicates
+        Node prev = dummy;
 
-        while (temp.next != null){
-            if (temp.data == temp.next.data){
-                temp.next = temp.next.next;
-                continue;
+        while (head != null) {
+            // If we found the start of duplicates (head value equals the next value)
+            if (head.next != null && head.data == head.next.data) {
+                // Move head forward until the end of duplicates
+                while (head.next != null && head.data == head.next.data) {
+                    head = head.next;
+                }
+                // Skip all duplicates
+                prev.next = head.next;
+            } else {
+                // No duplicates detected, move prev forward
+                prev = prev.next;
             }
-            temp = temp.next;
+            // Move head forward
+            head = head.next;
         }
-        return temp;
+
+        // Return the new head of the modified list
+        return dummy.next;
     }
+
+
+    // Question-86
+    public static Node partition(Node head, int x) {
+        return null;
+    }
+
+
     public static void main(String[] args) {
         LL list = new LL();
         list.addLast(1);
@@ -187,9 +228,11 @@ public class LinkList_Design {
 //        System.out.println(list.deleteFromFirst());
 
         list.print();
-        LL list2 = new LL();
-        list2.head = deleteDuplicates(list.head);
-        list2.print();
+        list.deleteFromLast();
+        list.print();
+//        LL list2 = new LL();
+//        list2.head = deleteDuplicates(list.head);
+//        list2.print();
 
 //        System.out.println(middleNode(list.head).data);
 
