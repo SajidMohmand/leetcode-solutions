@@ -13,7 +13,6 @@ public class Q2554 {
                 count++;
             }
         }
-
         return count;
     }
 
