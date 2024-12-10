@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Q2981 {
 
-    public int maximumLength(String s) {
+    public static int maximumLength(String s) {
         int n = s.length();
         int maxLength = -1;
         for (int len = 1; len <= n; len++) {
@@ -20,7 +20,7 @@ public class Q2981 {
 
         return maxLength;
     }
-    private boolean isSpecial(String str) {
+    static boolean isSpecial(String str) {
         char firstChar = str.charAt(0);
         for (char c : str.toCharArray()) {
             if (c != firstChar) {
@@ -28,5 +28,12 @@ public class Q2981 {
             }
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+
+//        Input: s = "aaaa"
+//        Output: 2
+        System.out.println(maximumLength("aaaa"));
     }
 }
