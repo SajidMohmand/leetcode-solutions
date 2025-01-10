@@ -1,5 +1,5 @@
 public class Q1769 {
-    ublic int[] minOperations(String boxes) {
+    public int[] minOperations(String boxes) {
         int n = boxes.length();
         int[] answer = new int[n];
 
