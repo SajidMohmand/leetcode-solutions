@@ -1,24 +1,38 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class NumberContainers {
+import java.util.*;
 
-    List<String> list;
+class NumberContainers {
+    private final Map<Integer, Integer> indexToNumber;
+    private final Map<Integer, TreeSet<Integer>> numberToIndices;
+
     public NumberContainers() {
-        list = new ArrayList<>();
+        indexToNumber = new HashMap<>();
+        numberToIndices = new HashMap<>();
     }
 
     public void change(int index, int number) {
+        if (indexToNumber.containsKey(index)) {
+            int oldNumber = indexToNumber.get(index);
+            if (oldNumber != number) {
+                numberToIndices.get(oldNumber).remove(index);
+                if (numberToIndices.get(oldNumber).isEmpty()) {
+                    numberToIndices.remove(oldNumber);
+                }
+            }
+        }
 
-        if (list.size() < index) return;
-        list.add(index,String.valueOf(number));
+        indexToNumber.put(index, number);
+        numberToIndices.putIfAbsent(number, new TreeSet<>());
+        numberToIndices.get(number).add(index);
     }
 
     public int find(int number) {
-        if (list.contains(String.valueOf(number))){
-            return list.indexOf(String.valueOf(number));
+        if (!numberToIndices.containsKey(number) || numberToIndices.get(number).isEmpty()) {
+            return -1;
         }
-        return -1;
+        return numberToIndices.get(number).first();
     }
 }
 
